@@ -4,15 +4,6 @@ import { Theme } from '@radix-ui/themes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { I18nProvider } from './src/contexts/I18nContext';
-import { SubscriptionProvider } from './src/contexts/SubscriptionContext';
-import { AuthProvider } from './src/contexts/AuthContext';
-
-// Route guards
-import ProtectedRoute from './src/components/ProtectedRoute';
-import AuthRoute from './src/components/AuthRoute';
-import RoleGuard from './src/rbac/RoleGuard';
-import RoleDashboardRedirect from './src/components/RoleDashboardRedirect';
 
 // Public pages
 import PublicHome from './src/pages/public/PublicHome';
@@ -44,7 +35,7 @@ import TalentMarketplace from './src/pages/marketplace/TalentMarketplace';
 import TrainingMarketplace from './src/pages/marketplace/TrainingMarketplace';
 import OpportunityMarketplace from './src/pages/marketplace/OpportunityMarketplace';
 
-// ── Shared module pages (wrapped with ProtectedRoute) ─────
+// ── Shared module pages ─────
 import Passeport from './src/pages/Passeport';
 import DigitalIdentity from './src/pages/DigitalIdentity';
 import Subcontracting from './src/pages/Subcontracting';
@@ -62,217 +53,99 @@ import NotFound from './src/pages/NotFound';
 const App: React.FC = () => {
   return (
     <Theme appearance="inherit" radius="large" scaling="100%">
-      <AuthProvider>
-        <I18nProvider>
-          <SubscriptionProvider>
-            <Router>
-              <main className="min-h-screen font-sans">
-                <Routes>
-                  {/* ── Public ──────────────────────────────────────── */}
-                  <Route path="/" element={<PublicHome />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/solutions" element={<Solutions />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/sectors" element={<Sectors />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/demo" element={<Demo />} />
-                  <Route path="/upgrade" element={<UpgradePlan />} />
+      <Router>
+        <main className="min-h-screen font-sans">
+          <Routes>
+            {/* ── Public ──────────────────────────────────────── */}
+            <Route path="/" element={<PublicHome />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/solutions" element={<Solutions />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/sectors" element={<Sectors />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/upgrade" element={<UpgradePlan />} />
 
-                  <Route path="/login" element={<AuthRoute><Login /></AuthRoute>} />
-                  <Route path="/signup" element={<AuthRoute><Signup /></AuthRoute>} />
-                  <Route path="/register" element={<AuthRoute><Signup /></AuthRoute>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/register" element={<Signup />} />
 
-                  {/* ── Dashboard router (redirects to role dashboard) ─ */}
-                  <Route path="/dashboard" element={<RoleDashboardRedirect />} />
+            {/* ── Dashboard router (redirects to role dashboard) ─ */}
+            <Route path="/dashboard" element={<PublicHome />} />
 
-                  {/* ── Super Admin dashboard ────────────────────────── */}
-                  <Route path="/admin/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin']}>
-                      <SuperAdminDashboard />
-                    </RoleGuard>
-                  } />
+            {/* ── Super Admin dashboard ────────────────────────── */}
+            <Route path="/admin/dashboard" element={<SuperAdminDashboard />} />
 
-                  {/* ── Government dashboards ────────────────────────── */}
-                  <Route path="/gov/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <GovernmentDashboard />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/local-content" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <LocalContent />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/esg" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <LocalContent />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/compliance" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <LocalContent />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/reports" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <LocalContent />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/analytics" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <Analytics />
-                    </RoleGuard>
-                  } />
-                  <Route path="/gov/regions" element={
-                    <RoleGuard allowedRoles={['super_admin', 'government']}>
-                      <LocalContent />
-                    </RoleGuard>
-                  } />
+            {/* ── Government dashboards ────────────────────────── */}
+            <Route path="/gov/dashboard" element={<GovernmentDashboard />} />
+            <Route path="/gov/local-content" element={<LocalContent />} />
+            <Route path="/gov/esg" element={<LocalContent />} />
+            <Route path="/gov/compliance" element={<LocalContent />} />
+            <Route path="/gov/reports" element={<LocalContent />} />
+            <Route path="/gov/analytics" element={<Analytics />} />
+            <Route path="/gov/regions" element={<LocalContent />} />
 
-                  {/* ── Enterprise dashboard ─────────────────────────── */}
-                  <Route path="/enterprise/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin', 'enterprise']}>
-                      <EnterpriseDashboard />
-                    </RoleGuard>
-                  } />
+            {/* ── Enterprise dashboard ─────────────────────────── */}
+            <Route path="/enterprise/dashboard" element={<EnterpriseDashboard />} />
 
-                  {/* ── Supplier dashboard ───────────────────────────── */}
-                  <Route path="/supplier/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin', 'supplier']}>
-                      <SupplierDashboard />
-                    </RoleGuard>
-                  } />
-                  <Route path="/supplier/applications" element={
-                    <RoleGuard allowedRoles={['super_admin', 'supplier']}>
-                      <Subcontracting />
-                    </RoleGuard>
-                  } />
-                  <Route path="/supplier/certifications" element={
-                    <RoleGuard allowedRoles={['super_admin', 'supplier']}>
-                      <Passeport />
-                    </RoleGuard>
-                  } />
+            {/* ── Supplier dashboard ───────────────────────────── */}
+            <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
+            <Route path="/supplier/applications" element={<Subcontracting />} />
+            <Route path="/supplier/certifications" element={<Passeport />} />
 
-                  {/* ── Talent dashboard ─────────────────────────────── */}
-                  <Route path="/talent/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin', 'talent']}>
-                      <TalentDashboard />
-                    </RoleGuard>
-                  } />
-                  <Route path="/talent/opportunities" element={
-                    <RoleGuard allowedRoles={['super_admin', 'talent']}>
-                      <Subcontracting />
-                    </RoleGuard>
-                  } />
-                  <Route path="/talent/certifications" element={
-                    <RoleGuard allowedRoles={['super_admin', 'talent']}>
-                      <Talents />
-                    </RoleGuard>
-                  } />
+            {/* ── Talent dashboard ─────────────────────────────── */}
+            <Route path="/talent/dashboard" element={<TalentDashboard />} />
+            <Route path="/talent/opportunities" element={<Subcontracting />} />
+            <Route path="/talent/certifications" element={<Talents />} />
 
-                  {/* ── Training Center dashboard ────────────────────── */}
-                  <Route path="/training/dashboard" element={
-                    <RoleGuard allowedRoles={['super_admin', 'training_center']}>
-                      <TrainingCenterDashboard />
-                    </RoleGuard>
-                  } />
-                  <Route path="/training/students" element={
-                    <RoleGuard allowedRoles={['super_admin', 'training_center']}>
-                      <Talents />
-                    </RoleGuard>
-                  } />
-                  <Route path="/training/certifications" element={
-                    <RoleGuard allowedRoles={['super_admin', 'training_center']}>
-                      <Formation />
-                    </RoleGuard>
-                  } />
-                  <Route path="/training/analytics" element={
-                    <RoleGuard allowedRoles={['super_admin', 'training_center']}>
-                      <Analytics />
-                    </RoleGuard>
-                  } />
-                  <Route path="/training/calendar" element={
-                    <RoleGuard allowedRoles={['super_admin', 'training_center']}>
-                      <Formation />
-                    </RoleGuard>
-                  } />
+            {/* ── Training Center dashboard ────────────────────── */}
+            <Route path="/training/dashboard" element={<TrainingCenterDashboard />} />
+            <Route path="/training/students" element={<Talents />} />
+            <Route path="/training/certifications" element={<Formation />} />
+            <Route path="/training/analytics" element={<Analytics />} />
+            <Route path="/training/calendar" element={<Formation />} />
 
-                  {/* ── Marketplace routes (public-ish, accessible to all authenticated) ── */}
-                  <Route path="/marketplace" element={<ProtectedRoute><MarketplaceHub /></ProtectedRoute>} />
-                  <Route path="/marketplace/suppliers" element={<ProtectedRoute><SupplierMarketplace /></ProtectedRoute>} />
-                  <Route path="/marketplace/talents" element={<ProtectedRoute><TalentMarketplace /></ProtectedRoute>} />
-                  <Route path="/marketplace/trainings" element={<ProtectedRoute><TrainingMarketplace /></ProtectedRoute>} />
-                  <Route path="/marketplace/opportunities" element={<ProtectedRoute><OpportunityMarketplace /></ProtectedRoute>} />
+            {/* ── Marketplace routes ── */}
+            <Route path="/marketplace" element={<MarketplaceHub />} />
+            <Route path="/marketplace/suppliers" element={<SupplierMarketplace />} />
+            <Route path="/marketplace/talents" element={<TalentMarketplace />} />
+            <Route path="/marketplace/trainings" element={<TrainingMarketplace />} />
+            <Route path="/marketplace/opportunities" element={<OpportunityMarketplace />} />
 
-                  {/* ── Shared module routes (plan-based access) ─────── */}
-                  <Route path="/passeport" element={
-                    <ProtectedRoute requiredModule="passeport"><Passeport /></ProtectedRoute>
-                  } />
-                  <Route path="/passeport-entreprise" element={
-                    <ProtectedRoute requiredModule="passeport"><Passeport /></ProtectedRoute>
-                  } />
-                  <Route path="/digital-identity" element={
-                    <ProtectedRoute requiredModule="digital-identity"><DigitalIdentity /></ProtectedRoute>
-                  } />
-                  <Route path="/identite-numerique" element={
-                    <ProtectedRoute requiredModule="digital-identity"><DigitalIdentity /></ProtectedRoute>
-                  } />
-                  <Route path="/subcontracting" element={
-                    <ProtectedRoute requiredModule="subcontracting"><Subcontracting /></ProtectedRoute>
-                  } />
-                  <Route path="/sous-traitance" element={
-                    <ProtectedRoute requiredModule="subcontracting"><Subcontracting /></ProtectedRoute>
-                  } />
-                  <Route path="/talents" element={
-                    <ProtectedRoute requiredModule="talents"><Talents /></ProtectedRoute>
-                  } />
-                  <Route path="/formation" element={
-                    <ProtectedRoute requiredModule="formation"><Formation /></ProtectedRoute>
-                  } />
-                  <Route path="/local-content" element={
-                    <ProtectedRoute requiredModule="local-content"><LocalContent /></ProtectedRoute>
-                  } />
-                  <Route path="/contenu-local" element={
-                    <ProtectedRoute requiredModule="local-content"><LocalContent /></ProtectedRoute>
-                  } />
-                  <Route path="/analytics" element={
-                    <ProtectedRoute requiredModule="analytics"><Analytics /></ProtectedRoute>
-                  } />
-                  <Route path="/localization" element={
-                    <ProtectedRoute requiredModule="localization"><Localization /></ProtectedRoute>
-                  } />
-                  <Route path="/collaboration" element={
-                    <ProtectedRoute><Collaboration /></ProtectedRoute>
-                  } />
-                  <Route path="/admin" element={
-                    <RoleGuard allowedRoles={['super_admin']}>
-                      <Admin />
-                    </RoleGuard>
-                  } />
-                  <Route path="/billing" element={
-                    <ProtectedRoute><Billing /></ProtectedRoute>
-                  } />
+            {/* ── Shared module routes ─────── */}
+            <Route path="/passeport" element={<Passeport />} />
+            <Route path="/passeport-entreprise" element={<Passeport />} />
+            <Route path="/digital-identity" element={<DigitalIdentity />} />
+            <Route path="/identite-numerique" element={<DigitalIdentity />} />
+            <Route path="/subcontracting" element={<Subcontracting />} />
+            <Route path="/sous-traitance" element={<Subcontracting />} />
+            <Route path="/talents" element={<Talents />} />
+            <Route path="/formation" element={<Formation />} />
+            <Route path="/local-content" element={<LocalContent />} />
+            <Route path="/contenu-local" element={<LocalContent />} />
+            <Route path="/analytics" element={<Analytics />} />
+            <Route path="/localization" element={<Localization />} />
+            <Route path="/collaboration" element={<Collaboration />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/billing" element={<Billing />} />
 
-                  {/* ── Procurement ─────────────────────────────────── */}
-                  <Route path="/procurement" element={<ProtectedRoute><ProcurementHub /></ProtectedRoute>} />
-                  <Route path="/procurement/:tab" element={<ProtectedRoute><ProcurementHub /></ProtectedRoute>} />
+            {/* ── Procurement ─────────────────────────────────── */}
+            <Route path="/procurement" element={<ProcurementHub />} />
+            <Route path="/procurement/:tab" element={<ProcurementHub />} />
 
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
 
-              <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                newestOnTop
-                closeOnClick
-                pauseOnHover
-              />
-            </Router>
-          </SubscriptionProvider>
-        </I18nProvider>
-      </AuthProvider>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+        />
+      </Router>
     </Theme>
   );
 };
