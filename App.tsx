@@ -17,25 +17,8 @@ import Login from './src/pages/public/Login';
 import Signup from './src/pages/public/Signup';
 import Demo from './src/pages/public/Demo';
 
-// ── Role-specific dashboards ───────────────────────────────
-import SuperAdminDashboard from './src/pages/dashboards/SuperAdminDashboard';
-import GovernmentDashboard from './src/pages/dashboards/GovernmentDashboard';
-import EnterpriseDashboard from './src/pages/dashboards/EnterpriseDashboard';
-import SupplierDashboard from './src/pages/dashboards/SupplierDashboard';
-import TalentDashboard from './src/pages/dashboards/TalentDashboard';
-import TrainingCenterDashboard from './src/pages/dashboards/TrainingCenterDashboard';
-
-// ── Procurement ──────────────────────────────────────────
-import ProcurementHub from './src/pages/procurement/ProcurementHub';
-
-// ── Marketplace ───────────────────────────────────────────
-import MarketplaceHub from './src/pages/marketplace/MarketplaceHub';
-import SupplierMarketplace from './src/pages/marketplace/SupplierMarketplace';
-import TalentMarketplace from './src/pages/marketplace/TalentMarketplace';
-import TrainingMarketplace from './src/pages/marketplace/TrainingMarketplace';
-import OpportunityMarketplace from './src/pages/marketplace/OpportunityMarketplace';
-
 // ── Shared module pages ─────
+import Home from './src/pages/Home';
 import Passeport from './src/pages/Passeport';
 import DigitalIdentity from './src/pages/DigitalIdentity';
 import Subcontracting from './src/pages/Subcontracting';
@@ -72,46 +55,7 @@ const App: React.FC = () => {
             <Route path="/register" element={<Signup />} />
 
             {/* ── Dashboard router (redirects to role dashboard) ─ */}
-            <Route path="/dashboard" element={<PublicHome />} />
-
-            {/* ── Super Admin dashboard ────────────────────────── */}
-            <Route path="/admin/dashboard" element={<SuperAdminDashboard />} />
-
-            {/* ── Government dashboards ────────────────────────── */}
-            <Route path="/gov/dashboard" element={<GovernmentDashboard />} />
-            <Route path="/gov/local-content" element={<LocalContent />} />
-            <Route path="/gov/esg" element={<LocalContent />} />
-            <Route path="/gov/compliance" element={<LocalContent />} />
-            <Route path="/gov/reports" element={<LocalContent />} />
-            <Route path="/gov/analytics" element={<Analytics />} />
-            <Route path="/gov/regions" element={<LocalContent />} />
-
-            {/* ── Enterprise dashboard ─────────────────────────── */}
-            <Route path="/enterprise/dashboard" element={<EnterpriseDashboard />} />
-
-            {/* ── Supplier dashboard ───────────────────────────── */}
-            <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
-            <Route path="/supplier/applications" element={<Subcontracting />} />
-            <Route path="/supplier/certifications" element={<Passeport />} />
-
-            {/* ── Talent dashboard ─────────────────────────────── */}
-            <Route path="/talent/dashboard" element={<TalentDashboard />} />
-            <Route path="/talent/opportunities" element={<Subcontracting />} />
-            <Route path="/talent/certifications" element={<Talents />} />
-
-            {/* ── Training Center dashboard ────────────────────── */}
-            <Route path="/training/dashboard" element={<TrainingCenterDashboard />} />
-            <Route path="/training/students" element={<Talents />} />
-            <Route path="/training/certifications" element={<Formation />} />
-            <Route path="/training/analytics" element={<Analytics />} />
-            <Route path="/training/calendar" element={<Formation />} />
-
-            {/* ── Marketplace routes ── */}
-            <Route path="/marketplace" element={<MarketplaceHub />} />
-            <Route path="/marketplace/suppliers" element={<SupplierMarketplace />} />
-            <Route path="/marketplace/talents" element={<TalentMarketplace />} />
-            <Route path="/marketplace/trainings" element={<TrainingMarketplace />} />
-            <Route path="/marketplace/opportunities" element={<OpportunityMarketplace />} />
+            <Route path="/dashboard" element={<Home />} />
 
             {/* ── Shared module routes ─────── */}
             <Route path="/passeport" element={<Passeport />} />
@@ -129,10 +73,6 @@ const App: React.FC = () => {
             <Route path="/collaboration" element={<Collaboration />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/billing" element={<Billing />} />
-
-            {/* ── Procurement ─────────────────────────────────── */}
-            <Route path="/procurement" element={<ProcurementHub />} />
-            <Route path="/procurement/:tab" element={<ProcurementHub />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
