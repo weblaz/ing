@@ -20,11 +20,6 @@ import Demo from './src/pages/public/Demo';
 // Shared module pages
 import Home from './src/pages/Home';
 import Passeport from './src/pages/Passeport';
-import Analytics from './src/pages/Analytics';
-import Localization from './src/pages/Localization';
-import Collaboration from './src/pages/Collaboration';
-import Admin from './src/pages/Admin';
-import Billing from './src/pages/Billing';
 import UpgradePlan from './src/pages/UpgradePlan';
 import NotFound from './src/pages/NotFound';
 
@@ -55,11 +50,6 @@ const App: React.FC = () => {
             {/* ── Shared module routes ─────── */}
             <Route path="/passeport" element={<Passeport />} />
             <Route path="/passeport-entreprise" element={<Passeport />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/localization" element={<Localization />} />
-            <Route path="/collaboration" element={<Collaboration />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/billing" element={<Billing />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
