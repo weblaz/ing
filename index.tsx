@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './styles.css';
+import { AuthProvider } from './src/contexts/AuthContext';
+import { SubscriptionProvider } from './src/contexts/SubscriptionContext';
+import { I18nProvider } from './src/contexts/I18nContext';
+import { LocalizationProvider } from './src/contexts/LocalizationContext';
 
 // Send logs to parent frame (like a preview system)
 function postToParent(level: string, ...args: any[]): void {
@@ -45,6 +49,14 @@ window.onunhandledrejection = function (event) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <SubscriptionProvider>
+        <I18nProvider>
+          <LocalizationProvider>
+            <App />
+          </LocalizationProvider>
+        </I18nProvider>
+      </SubscriptionProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
