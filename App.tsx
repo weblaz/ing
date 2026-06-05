@@ -17,14 +17,9 @@ import Login from './src/pages/public/Login';
 import Signup from './src/pages/public/Signup';
 import Demo from './src/pages/public/Demo';
 
-// ── Shared module pages ─────
+// Shared module pages
 import Home from './src/pages/Home';
 import Passeport from './src/pages/Passeport';
-import DigitalIdentity from './src/pages/DigitalIdentity';
-import Subcontracting from './src/pages/Subcontracting';
-import Talents from './src/pages/Talents';
-import Formation from './src/pages/Formation';
-import LocalContent from './src/pages/LocalContent';
 import Analytics from './src/pages/Analytics';
 import Localization from './src/pages/Localization';
 import Collaboration from './src/pages/Collaboration';
@@ -60,14 +55,6 @@ const App: React.FC = () => {
             {/* ── Shared module routes ─────── */}
             <Route path="/passeport" element={<Passeport />} />
             <Route path="/passeport-entreprise" element={<Passeport />} />
-            <Route path="/digital-identity" element={<DigitalIdentity />} />
-            <Route path="/identite-numerique" element={<DigitalIdentity />} />
-            <Route path="/subcontracting" element={<Subcontracting />} />
-            <Route path="/sous-traitance" element={<Subcontracting />} />
-            <Route path="/talents" element={<Talents />} />
-            <Route path="/formation" element={<Formation />} />
-            <Route path="/local-content" element={<LocalContent />} />
-            <Route path="/contenu-local" element={<LocalContent />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/localization" element={<Localization />} />
             <Route path="/collaboration" element={<Collaboration />} />
